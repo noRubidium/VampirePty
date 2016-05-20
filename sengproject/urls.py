@@ -19,4 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^bloods/', include('bloods.urls')),
+    url(r'^hospitals/', include('hospital.urls')),
+    url(r'^batmobile/', include('batmobile.urls')),
+    url(r'^donor/', include('donor.urls')),
 ]

@@ -1,0 +1,19 @@
+{% if hospital_list %}
+  <ul>
+    {% for hospital in hospital_list %}
+        <li><a href="/hospitals/{{ hospital.id }}/">{{ hospital.name }}</a></li>
+    {% endfor %}
+  </ul>
+  <ul>
+    {% for i in range %}
+      {% if i == page_id %}
+        <li>{{ i}}</li>
+      {% else %}
+        <li><a href="/hospitals/page/{{ i }}/">{{ i }}</a></li>
+      {% endif %}
+
+    {% endfor %}
+  </ul>
+{% else %}
+<p> No hospital ! </p>
+{% endif %}

@@ -3,4 +3,5 @@ from django.http import HttpResponse
 # Create your views here.
 def index(response):
     return HttpResponse('HelloWorld')
-# https://docs.djangoproject.com/en/1.9/intro/tutorial02/
+def hospital_index(response, hospital_id):
+    return HttpResponse('HelloWorld')
