@@ -5,6 +5,8 @@ from django.template import loader
 
 from .models import Hospital
 from hospital.models import Hospital
+
+from algorithm import merge_sort, my_filter
 # Create your views here.
 def index(request):
     hospital_list = Hospital.objects.all()[:20]
@@ -46,6 +48,10 @@ def detail(request,hospital_id):
         hospital = Hospital.objects.get(pk=hospital_id)
         bloods = hospital.blood_set.all()
         donors = hospital.donor_set.all()
+        bloods_1 = my_filter(bloods, key = lambda x: x.used)
+        bloods = bloods_1[:]
+        merge_sort(bloods, bloods_1, key = lambda x: x.amount)
+        print bloods
     except Hospital.DoesNotExist:
         raise Http404("Hospital does not exist")
-    return render(request, 'hospitals/detail.html', {'hospital': hospital})
+    return render(request, 'hospitals/detail.html', {'hospital': hospital,'blood_list': bloods, 'donors': donors})
