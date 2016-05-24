@@ -31,9 +31,6 @@ def merge_sort(array, holder, start = 0, end = None, key = lambda x:x ):
             array[curr] = holder[j]
             j += 1
             curr += 1
-    print start, end, array, holder
-    print
-    print
 
 # my filter
 def my_filter(array, key):
@@ -53,6 +50,7 @@ def my_filter(array, key):
             result[curr] = array[i]
             curr += 1
         i += 1
+        print i
     return result
 
 def main():

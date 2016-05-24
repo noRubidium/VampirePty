@@ -1,40 +1,39 @@
-<h1>{{ hospital }}</h1>
+{% extends 'base.html' %}
+
+{% block title %} {{ hospital }} - Detail {% endblock %}
+{% block home %} active {% endblock %}
+{% block heading %}{{ hospital }} Hospital{% endblock %}
+{% block content %}
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<div id="data_display">
+  The distribution of different blood type
+</div>
 <style>
-  table, td {
-    border:black 1px solid;
-  }
+#data_display div {
+  text-align: right;
+  padding: 4px;
+  margin: 2px;
+  color: gray;
+}
 </style>
-<table style="">
-  <thead>
-    <td>
-      Name
-    </td>
-    <td>
-      used
-    </td>
-    <td>
-      amount
-    </td>
-    <td>
-      Expire Date
-    </td>
-    <td>
-      Arrival Date
-    </td>
-  </thead>
-{% for b in blood_list %}
-  <tr style="border:black 1px solid">
-    <td>{{b.donorId.name}}</td>
-    <td>
-      {{b.used}}
-    </td>
-    <td>{{b.amount}}</td>
-    <td>
-      {{ b.used_by_date }}
-    </td>
-    <td>
-      {{ b.arrive_date}}
-    </td>
-  </tr>
-{% endfor %}
-</table>
+<script type="text/javascript">
+
+  var data = [
+    {% for  bs, bt  in blood_stats %}
+      { name: '{{ bs }}', value:{{ bt }} } ,
+    {% endfor %}
+  ];
+
+
+  d3.select("div#data_display").selectAll("div")
+    .data(data)
+  .enter().append("div")
+  .transition()
+    .each("start", function() { d3.select(this).style("width", "0px").style("background-color", "white"); })
+    .text(function(d) { return d.name + ": "+ d.value; })
+    .duration(1550)
+    .style("width", function(d) { return d.value * 0.01 + "%"; });
+
+
+</script>
+{% endblock %}

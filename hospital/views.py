@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 
+import datetime
 
 from .models import Hospital
 from hospital.models import Hospital
 
 from algorithm import merge_sort, my_filter
+
 # Create your views here.
 def index(request):
     hospital_list = Hospital.objects.all()[:20]
@@ -47,11 +49,31 @@ def detail(request,hospital_id):
     try:
         hospital = Hospital.objects.get(pk=hospital_id)
         bloods = hospital.blood_set.all()
-        donors = hospital.donor_set.all()
-        bloods_1 = my_filter(bloods, key = lambda x: x.used)
-        bloods = bloods_1[:]
-        merge_sort(bloods, bloods_1, key = lambda x: x.amount)
-        print bloods
+        bloods = my_filter(bloods, key = lambda x: (not x.used) and x.used_by_date >= datetime.date.today() )
+        d = dict()
+        blood_types = ['A+','A-','B+','B-','AB+','AB-','0+','0-']
+        for blood in bloods:
+            d[str(blood.donorId.blood_type)] = d.get(str(blood.donorId.blood_type), 0 ) + blood.amount
+        blood_stats = [(k,d.get(k,0)) for k in blood_types]
     except Hospital.DoesNotExist:
         raise Http404("Hospital does not exist")
-    return render(request, 'hospitals/detail.html', {'hospital': hospital,'blood_list': bloods, 'donors': donors})
+    return render(request, 'hospitals/detail.html', {'hospital': hospital,'blood_stats': blood_stats, 'id': hospital_id})
+
+def blood_detail(request,hospital_id):
+    try:
+        hospital = Hospital.objects.get(pk=hospital_id)
+        bloods = hospital.blood_set.all()
+        bloods_1 = my_filter(bloods, key = lambda x: not x.used)
+        bloods = bloods_1[:]
+        merge_sort(bloods, bloods_1, key = lambda x: x.used_by_date)
+    except Hospital.DoesNotExist:
+        raise Http404("Hospital does not exist")
+    return render(request, 'hospitals/blood_detail.html', {'blood_list':bloods,'hospital': hospital, 'id': hospital_id})
+
+def donor_detail(request,hospital_id):
+    try:
+        hospital = Hospital.objects.get(pk=hospital_id)
+        donors = hospital.donor_set.all()
+    except Hospital.DoesNotExist:
+        raise Http404("Hospital does not exist")
+    return render(request, 'hospitals/donor_detail.html', {'hospital': hospital,'blood_list': bloods, 'donors': donors, 'id': hospital_id})

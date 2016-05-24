@@ -16,6 +16,9 @@ class Blood(models.Model):
     arrive_date = models.DateField()
     used_by_date = models.DateField()
 
+    def is_expired():
+        
+        pass
 '''
 from donor.models import Donor
 from hospital.models import Hospital

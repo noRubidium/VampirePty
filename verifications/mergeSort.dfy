@@ -10,8 +10,9 @@ modifies a, holder
 		a[start] := holder[start];
 	}else{
 		var mid:int := (end + start) / 2;
-		mergeSort(holder,a, start, mid);
 		mergeSort(holder,a, mid, end);
+		mergeSort(holder,a, start, mid);
+		assume sorted(holder,mid,end);
 		merge(a,holder,start, mid, end);
 		
 	}
