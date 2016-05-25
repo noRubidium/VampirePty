@@ -6,6 +6,7 @@ from donor.models import Donor
 from hospital.models import Hospital
 from batmobile.models import Batmobile
 
+import datetime
 
 class Blood(models.Model):
     amount = models.BigIntegerField()
@@ -16,9 +17,8 @@ class Blood(models.Model):
     arrive_date = models.DateField()
     used_by_date = models.DateField()
 
-    def is_expired():
-        
-        pass
+    def is_expired(self):
+        return self.used_by_date < datetime.date.today()
 '''
 from donor.models import Donor
 from hospital.models import Hospital

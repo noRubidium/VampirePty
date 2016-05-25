@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^bloods/', include('bloods.urls')),
     url(r'^hospitals/', include('hospital.urls')),
     url(r'^batmobile/', include('batmobile.urls')),
     url(r'^donor/', include('donor.urls')),
+    url(r'^$',views.index, name="index")
 ]

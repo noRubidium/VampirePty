@@ -2,6 +2,7 @@
 
 {% block title %} {{ hospital }} - Detail {% endblock %}
 {% block home %} active {% endblock %}
+{% block type %} hospitals{% endblock %}
 {% block heading %}{{ hospital }} Hospital{% endblock %}
 {% block content %}
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -32,7 +33,7 @@
     .each("start", function() { d3.select(this).style("width", "0px").style("background-color", "white"); })
     .text(function(d) { return d.name + ": "+ d.value; })
     .duration(1550)
-    .style("width", function(d) { return d.value * 0.01 + "%"; });
+    .style("width", function(d) { return d.value * 0.006 + "%"; });
 
 
 </script>

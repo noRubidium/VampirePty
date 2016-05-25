@@ -20,6 +20,7 @@
   <body>
     <div class="body">
       <ul class="nav nav-tabs">
+        <li role="presentation"><a href="/hospitals/">View All</a></li>
         <li role="presentation" class="{% block home %}{% endblock %}"><a href="/hospitals/{{ id }}">Home</a></li>
         <li role="presentation" class="{% block blood %}{% endblock %}"><a href="/hospitals/{{ id }}/bloods">Blood</a></li>
         <li role="presentation" class="{% block donor %}{% endblock %}"><a href="/hospitals/{{ id }}/donors">Donor</a></li>
@@ -33,6 +34,7 @@
   <p>Thanks for visiting </p>
 {% endblock %}
   </div>
+  
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </body>

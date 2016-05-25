@@ -19,6 +19,7 @@ def index(request):
     'page_id': 1,
     'starting_page': 1,
     'range': xrange(starting_page,starting_page + 5),
+    'id': 1
     }
     return render( request,'hospitals/index.html', context )
 
@@ -42,6 +43,7 @@ def page(request,page_id):
         'page_id': page_id,
         'starting_page': starting_page,
         'range':  xrange(starting_page,starting_page + 5),
+        'id': 1
     }
     return HttpResponse(template.render(context, request))
 
@@ -68,7 +70,7 @@ def blood_detail(request,hospital_id):
         merge_sort(bloods, bloods_1, key = lambda x: x.used_by_date)
     except Hospital.DoesNotExist:
         raise Http404("Hospital does not exist")
-    return render(request, 'hospitals/blood_detail.html', {'blood_list':bloods,'hospital': hospital, 'id': hospital_id})
+    return render(request, 'hospitals/blood_detail.html', {'blood_list':bloods,'hospital': hospital, 'id': hospital_id, 'today': datetime.date.today()})
 
 def donor_detail(request,hospital_id):
     try:

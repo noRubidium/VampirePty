@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from faker import Faker
-from faker import Factory
+# from faker import Faker
+# from faker import Factory
 from .models import Donor
-import random
+# import random
 
 # Create your views here.
 def index(request):

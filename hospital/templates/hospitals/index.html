@@ -1,19 +1,25 @@
-{% if hospital_list %}
-  <ul>
-    {% for hospital in hospital_list %}
-        <li><a href="/hospitals/{{ hospital.id }}/">{{ hospital.name }}</a></li>
-    {% endfor %}
-  </ul>
-  <ul>
-    {% for i in range %}
-      {% if i == page_id %}
-        <li>{{ i}}</li>
-      {% else %}
-        <li><a href="/hospitals/page/{{ i }}/">{{ i }}</a></li>
-      {% endif %}
+{% extends 'base.html' %}
 
-    {% endfor %}
-  </ul>
-{% else %}
-<p> No hospital ! </p>
-{% endif %}
+{% block title %} All the hospitals {% endblock %}
+{% block heading %}Hospital List{% endblock %}
+{% block content %}
+  {% if hospital_list %}
+    <ul  class="list-group">
+      {% for hospital in hospital_list %}
+          <li class="list-group-item" style="text-align:center"><a href="/hospitals/{{ hospital.id }}/">{{ hospital.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <ul class="pagination">
+      {% for i in range %}
+        {% if i == page_id %}
+          <li class="active"><a href = "#">{{ i}} <span class="sr-only">(current)</span> </a></li>
+        {% else %}
+          <li><a href="/hospitals/page/{{ i }}/">{{ i }}</a></li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+  {% else %}
+  <p> No hospital ! </p>
+  {% endif %}
+{% endblock %}
