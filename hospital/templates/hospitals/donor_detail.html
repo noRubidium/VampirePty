@@ -1,25 +1,25 @@
-{% extends 'base.html' %}
+{% extends 'hospital_base.html' %}
 
-{% block title %} {{ hospital }} - Blood Detail {% endblock %}
+{% block title %} {{ hospital }} Hospital - Donors Detail {% endblock %}
 {% block donor %} active {% endblock %}
-{% block heading %}{{ hospital }} Hospital Blood detail{% endblock %}
+{% block heading %}{{ hospital }} Hospital Donors detail{% endblock %}
 {% block content %}
 
 <table class="table table-striped">
   <thead>
     <th> Name </th>
-    <th> Used </th>
-    <th> Amount </th>
-    <th> Arrival Date </th>
-    <th> Expire Date </th>
+    <th> Gender </th>
+    <th> Blood Type </th>
+    <th> date of birth </th>
+    <th> phone No </th>
   </thead>
-  {% for b in blood_list %}
+  {% for d in donors %}
     <tr>
-      <td>{{b.donorId.name}}</td>
-      <td> {{b.used}} </td>
-      <td>{{b.amount}}</td>
-      <td> {{ b.arrive_date}} </td>
-      <td> {{ b.used_by_date }} </td>
+      <td>{{d.name}}</td>
+      <td> {{d.gender}} </td>
+      <td>{{d.blood_type}}</td>
+      <td> {{ d.DOB}} </td>
+      <td> {{ d.phone }} </td>
     </tr>
   {% endfor %}
 </table>

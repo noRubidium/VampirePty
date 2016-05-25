@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'hospital_base.html' %}
 
 {% block title %} {{ hospital }} - Blood Detail {% endblock %}
 {% block blood %} active {% endblock %}
@@ -9,27 +9,74 @@
     color: red;
   }
 </style>
+<form class="form" action="" method="get">
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="hide_expired" value="true" {% if hide_expired %}checked{% endif %}>
+      Hide Expired blood
+    </label>
+  </div>
+  <div class="checkbox">
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox1" name="blood_type" value="A"
+      {% if "A" in blood_filter %}checked{% endif %}> A
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox2" name="blood_type" value="B"
+      {% if "B" in blood_filter %}checked{% endif %}> B
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox3" name="blood_type" value="AB"
+      {% if "AB" in blood_filter %}checked{% endif %}> AB
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox4" name="blood_type" value="0"
+      {% if "0" in blood_filter %}checked{% endif %}> 0
+    </label>
+  </div>
+  <input type="hidden" name="page" value="{{ blood_list.number }}">
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
 <table class="table table-striped">
   <thead>
     <th> Name </th>
     <th> Used </th>
     <th> Amount </th>
+    <th> Blood Type </th>
     <th> Arrival Date </th>
     <th> Expire Date </th>
   </thead>
   {% for b in blood_list %}
     <tr class="
-    {% if b.used_by_date < today %}
+    {% if b.is_expired %}
     expired
     {% endif %}
     ">
       <td>{{b.donorId.name}}</td>
       <td> {{b.used}} </td>
       <td>{{b.amount}}</td>
+      <td>
+        {{ b.donorId.blood_type}}
+      </td>
       <td> {{ b.arrive_date}} </td>
       <td> {{ b.used_by_date }} </td>
     </tr>
   {% endfor %}
 </table>
 
+  <div class="pagination">
+      <span class="step-links">
+          {% if blood_list.has_previous %}
+              <a href="?{% url_replace request 'page' blood_list.previous_page_number %}">previous</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ blood_list.number }} of {{ blood_list.paginator.num_pages }}.
+          </span>
+
+          {% if blood_list.has_next %}
+              <a href="?{% url_replace request 'page' blood_list.next_page_number %}">next</a>
+          {% endif %}
+      </span>
+  </div>
 {% endblock %}

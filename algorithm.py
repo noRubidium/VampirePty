@@ -50,7 +50,6 @@ def my_filter(array, key):
             result[curr] = array[i]
             curr += 1
         i += 1
-        print i
     return result
 
 def main():

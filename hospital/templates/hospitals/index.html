@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'hospital_base.html' %}
 
 {% block title %} All the hospitals {% endblock %}
 {% block heading %}Hospital List{% endblock %}
@@ -6,7 +6,7 @@
   {% if hospital_list %}
     <ul  class="list-group">
       {% for hospital in hospital_list %}
-          <li class="list-group-item" style="text-align:center"><a href="/hospitals/{{ hospital.id }}/">{{ hospital.name }}</a></li>
+          <a href="/hospitals/{{ hospital.id }}/"><li class="list-group-item" style="text-align:center">{{ hospital.name }}</li></a>
       {% endfor %}
     </ul>
     <ul class="pagination">
