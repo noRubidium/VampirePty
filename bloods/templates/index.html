@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Total Blood Stats {% endblock %}
+{% block home %} active {% endblock %}
+{% block heading %} Total Blood Stats {% endblock %}
+{% block content %}
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<div id="data_display">
+  The distribution of different blood type
+</div>
+<style>
+#data_display div {
+  text-align: right;
+  padding: 4px;
+  margin: 2px;
+  color: gray;
+}
+</style>
+<script type="text/javascript">
+
+  var data = [
+    {% for  bs, bt  in blood_stats %}
+      { name: '{{ bs }}', value:{{ bt }} } ,
+    {% endfor %}
+  ];
+
+
+  d3.select("div#data_display").selectAll("div")
+    .data(data)
+  .enter().append("div")
+  .transition()
+    .each("start", function() { d3.select(this).style("width", "0px").style("background-color", "white"); })
+    .text(function(d) { return d.name + ": "+ d.value; })
+    .duration(1550)
+    .style("width", function(d) { return d.value * 0.01 + "%"; });
+
+
+</script>
+{% endblock %}

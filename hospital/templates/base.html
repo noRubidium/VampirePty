@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}
+    </title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"-->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-kVo/Eh0sv7ZdiwZK32nRsp1FrDT3sLRLx3zVpSSTI9UdO5H02LJNLBg5F1gwvKg0" crossorigin="anonymous">
+  </head>
+  <style>
+    .body {
+      max-width: 900px;
+      margin: auto;
+    }
+  </style>
+  <body>
+    <div class="body">
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="{% block home %}{% endblock %}"><a href="/hospitals/{{ id }}">Home</a></li>
+        <li role="presentation" class="{% block blood %}{% endblock %}"><a href="/hospitals/{{ id }}/bloods">Blood</a></li>
+        <li role="presentation" class="{% block donor %}{% endblock %}"><a href="/hospitals/{{ id }}/donors">Donor</a></li>
+      </ul>
+<h1>{% block heading %}{% endblock %}</h1>
+{% block content %}{% endblock %}
+</div>
+<div class="footer">
+{% block footer %}
+  <hr>
+  <p>Thanks for visiting </p>
+{% endblock %}
+  </div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>
