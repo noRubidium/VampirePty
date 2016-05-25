@@ -13,8 +13,6 @@ from hospital.models import Hospital
 
 from algorithm import merge_sort, my_filter
 
-register = template.Library()
-
 
 # Create your views here.
 def index(request):
@@ -108,11 +106,4 @@ def donor_detail(request,hospital_id):
         raise Http404("Hospital does not exist")
     return render(request, 'hospitals/donor_detail.html', {'hospital': hospital,'donors': donors, 'id': hospital_id})
 
-@register.simple_tag
-def url_replace(request, field, value):
 
-    dict_ = request.GET.copy()
-
-    dict_[field] = value
-
-    return dict_.urlencode()
