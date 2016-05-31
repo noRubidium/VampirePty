@@ -1,24 +1,39 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.db.models import Sum
 import datetime
 
 from .models import Blood
+from donor.models import Donor
 
 from algorithm import merge_sort, my_filter
 
 # Create your views here.
-def index(response):
-    bloods = Blood.objects.filter(used = False)
-    bloods = my_filter(bloods, key = lambda x: x.used_by_date >= datetime.date.today() )
+def index(request):
+    donors = Donor.objects.all()
+    # bloods = my_filter(bloods, key = lambda x: x.used_by_date >= datetime.date.today() )
     d = dict()
     blood_types = ['A+','A-','B+','B-','AB+','AB-','0+','0-']
-    i = 0
-    for blood in bloods:
-        print i
-        i += 1
-        t = str(blood.donorId.blood_type)
-        d[t] = d.get(t, 0 ) + blood.amount
+    for donor in donors:
+        t = donor.blood_type
+        amount = donor.blood_set.filter(used = False).aggregate(Sum('amount')).get('amount__sum', 0)
+        if(amount == None):
+            amount = 0
+        d[t] = d.get(t, 0 ) + amount
     blood_stats = [(k,d.get(k,0)) for k in blood_types]
     print blood_stats
-    return render(request, 'index.html', {'blood_stats': blood_stats})
+    return render(request, 'blood_index.html', {'blood_stats': blood_stats})
+
+def detail(request, bloodId=1):
+    try:
+        blood = Blood.objects.filter(pk = bloodId)[0]
+        donor = blood.donorId
+        hospital = blood.hospitalId
+        batmobile = blood.bat_mobileId
+    except Blood.DoesNotExist:
+        raise Http404("Blood does not exist")
+    return render(request, 'blood_detail.html', {'hospital': hospital,'blood': blood, 'donor': donor, 'batmobile': batmobile})
+
+def add(request):
+    if request.method == 'POST':
+        

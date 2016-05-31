@@ -1,0 +1,58 @@
+{% extends 'blood_base.html' %}
+
+{% block title %} Blood Record {% endblock %}
+{% block detail %} active {% endblock %}
+{% block heading %} Blood Record {% endblock %}
+{% block content %}
+<div class="">
+  BloodType: {{donor.blood_type}}
+
+</div>
+<div class="">
+    Amount: {{blood.amount}}
+</div>
+
+<div class="">
+  Arrival date: {{blood.arrive_date}}
+</div>
+
+<div class="">
+  Expiration date: {{blood.used_by_date}}
+</div>
+
+<div class="">
+  Accepted Hospital: <a href="/hospitals/{{hospital.pk}}">{{ hospital.name }}</a>
+</div>
+<div class="">
+  Collected by bat mobile: <a href="/batmobile/{{batmobile.pk}}">{{ batmobile.name }}</a>
+</div>
+<h3>
+Donor detail
+</h3>
+<div>Name: {{donor.name}}</div>
+<div>Gender: {{donor.gender}} </div>
+<div>Date of Birth {{ donor.DOB}} </div>
+<div>Phone number {{ donor.phone }} </div>
+<div class="">
+Last verified on {{donor.last_verified}}
+</div>
+<div class="">
+  Address: {{donor.address}}
+</div>
+<div id="googleMap" style="width:500px;height:380px;"></div>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+function initialize() {
+  var mapProp = {
+    center:new google.maps.LatLng({{donor.latitude}},{{donor.longitude}}),
+    zoom:12,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  new google.maps.Marker({
+                   map: map,
+                   position: new google.maps.LatLng({{donor.latitude}},{{donor.longitude}}) });
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+{% endblock %}
