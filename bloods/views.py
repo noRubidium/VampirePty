@@ -4,6 +4,7 @@ from django.db.models import Sum
 import datetime
 
 from .models import Blood
+from .forms import BloodForm
 from donor.models import Donor
 
 from algorithm import merge_sort, my_filter
@@ -36,4 +37,11 @@ def detail(request, bloodId=1):
 
 def add(request):
     if request.method == 'POST':
-        
+        form =BloodForm(request.POST)
+        if form.is_valid():
+            
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = BloodForm()
+
+    return render(request, 'blood_add.html', {'form': form})
